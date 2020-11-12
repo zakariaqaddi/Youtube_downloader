@@ -85,7 +85,7 @@ def telecharger():
 top = Tk(className=' GUI YOUTUBE DOWNLOADER')
 # top['background'] = '#856ff8'
 top.geometry("450x250")
-top.iconbitmap(r'C:\Users\hamza\Desktop\Youtube_dw\icone.ico')
+top.iconbitmap(r'C:\Users\PC\Desktop\Youtube_downloader\youtube.ico')
 
 radio = IntVar()
 
