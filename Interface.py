@@ -14,18 +14,26 @@ Playlist_audios = []
 
 
 def video_download(y):
-    videostreams = y.getbest()
+    t = liste.curselection()  # return tuple('Emplacement',)
+    x = []
+    x.append(t[0])
+    m = int(x[0])
+    videostreams = y.streams()
     #print('la taille de la vidéo est : ', Resolution_video[y-1].get_filesize())
-    videostreams.download()
+    videostreams[m].download()
     print('la vidéo est téléchargée')
 
 # ----------------------------------Telechargement d'un audio-----------------------
 
 
 def audio_download(y):
-    audiostreams = y.getbestaudio()
+    t = liste.curselection()  # return tuple('Emplacement',)
+    x = []
+    x.append(t[0])
+    m = int(x[0])
+    audiostreams = y.audiostreams()
     #print('la taille du audio est : ', Resolution_audio[y-1].get_filesize())
-    audiostreams.download()
+    audiostreams[m].download()
     print('le audio est téléchargé')
 
 
@@ -50,10 +58,25 @@ def download_playlist_audio(x):
     for i in Playlist_audios:
         i.download()
 
+# -----------------------------------------------------Resolution------------------------------
+
+
+def Resolution():
+    l = e.git()
+    video = pafy.new(l)
+    ch = selection()
+    if ch == 1:
+        Str = video.streams
+    elif ch == 2:
+        Str = video.audiostreams
+    for i in Str:
+        liste.insert(END, i)
+
+# -----------------------------------------------Choix------------------------------------------------
+
 
 def selection():
     return radio.get()
-
 
 # ----------------------------------------------------main----------------------------------------------------
 
@@ -84,7 +107,7 @@ def telecharger():
 
 top = Tk(className=' GUI YOUTUBE DOWNLOADER')
 # top['background'] = '#856ff8'
-top.geometry("450x250")
+top.geometry("750x550")
 top.iconbitmap(r'C:\Users\PC\Desktop\Youtube_downloader\youtube.ico')
 
 radio = IntVar()
@@ -114,6 +137,11 @@ R4 = Radiobutton(top, text=Choix[3], variable=radio, value=4)
 R4.grid(row=9, column=2)
 
 b = Button(top, text="Lancer", command=telecharger)
+c = Button(top, text="Resolution", command=Resolution)
+c.grid(row=7, column=3)
+
+liste = Listbox(top)
+liste.grid(row=9, column=3)
 
 vide1 = Label(top, text='')
 vide2 = Label(top, text='')
