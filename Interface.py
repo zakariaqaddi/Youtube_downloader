@@ -62,7 +62,7 @@ def download_playlist_audio(x):
 
 
 def Resolution():
-    l = e.git()
+    l = e.get()
     video = pafy.new(l)
     ch = selection()
     if ch == 1:
