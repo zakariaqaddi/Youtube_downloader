@@ -65,6 +65,7 @@ def Resolution():
     l = e.get()
     video = pafy.new(l)
     ch = selection()
+    liste.delete(0, END)
     if ch == 1:
         Str = video.streams
     elif ch == 2:
