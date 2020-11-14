@@ -21,6 +21,7 @@ def video_download(y):
     videostreams = y.streams()
     #print('la taille de la vidéo est : ', Resolution_video[y-1].get_filesize())
     videostreams[m].download()
+    sts.set('la vidéo est téléchargée')
     print('la vidéo est téléchargée')
 
 # ----------------------------------Telechargement d'un audio-----------------------
@@ -34,6 +35,7 @@ def audio_download(y):
     audiostreams = y.audiostreams()
     #print('la taille du audio est : ', Resolution_audio[y-1].get_filesize())
     audiostreams[m].download()
+    sts.set('le audio est téléchargé')
     print('le audio est téléchargé')
 
 
@@ -46,6 +48,8 @@ def download_playlist_video(x):
   # download playlist_videos
     for i in Playlist_videos:
         i.download()
+    sts.set('la playlist video est téléchargée')
+    print('la playlist video est téléchargée')
 
 # ---------------------------------Telechargement d'une Playliste de audios----------------------------------------
 
@@ -57,7 +61,8 @@ def download_playlist_audio(x):
   # download playlist_videos
     for i in Playlist_audios:
         i.download()
-
+    sts.set('la playlist audio est téléchargée')
+    print('la playlist audio est téléchargée')
 # -----------------------------------------------------Resolution------------------------------
 
 
@@ -101,6 +106,8 @@ def telecharger():
             playlist = pafy.get_playlist(lien)
             download_playlist_audio(playlist)
     except:
+        sts.set(
+            'Oups! vous avez commit un erreur quelque part, vérifiez votre url ou connexion ')
         print('Oups! vous avez commit un erreur quelque part, vérifiez votre url ou connexion ')
 
 # ---------------------------------------------------Interface--------------------------------------------
@@ -119,6 +126,10 @@ title.grid(row=1, column=2)
 
 url = Label(top, text=" Enter le lien Youtube ")
 url.grid(row=3, column=2)
+
+sts = StringVar()
+status = Label(top, textvariable=sts)
+status.grid(row=13, column=2)
 
 e = StringVar()
 e1 = Entry(top, textvariable=e)
@@ -146,8 +157,10 @@ liste.grid(row=9, column=3)
 
 vide1 = Label(top, text='')
 vide2 = Label(top, text='')
+vide3 = Label(top, text='')
 vide1.grid(row=10, column=2)
 vide2.grid(row=5, column=2)
+vide2.grid(row=12, column=2)
 b.grid(row=11, column=2)
 
 
