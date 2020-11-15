@@ -115,53 +115,49 @@ def telecharger():
 
 top = Tk(className=' GUI YOUTUBE DOWNLOADER')
 # top['background'] = '#856ff8'
-top.geometry("750x550")
-top.iconbitmap(r'C:\Users\PC\Desktop\Youtube_downloader\youtube.ico')
+top.geometry("650x450")
+top.config(background='#333333')
+top.iconbitmap(r'D:\Youtube_dw\youtube.ico')
 
 radio = IntVar()
 
 title = Label(
-    top, text="Bienvenue, Ce petit programme vous permet de télécharger video, audio ou playlist")
-title.grid(row=1, column=2)
+    top, text="Bienvenue, Ce petit programme vous permet de télécharger video, audio ou playlist",font=("Courrier", 13) , bg='#333333',fg='#FFFF66')
+title.pack()
 
-url = Label(top, text=" Enter le lien Youtube ")
-url.grid(row=3, column=2)
+url = Label(top, text=" Enter le lien Youtube ",bg='#333333' ,font=("courrier", 11),fg='#99CCCC' )
+url.pack()
 
 sts = StringVar()
-status = Label(top, textvariable=sts)
-status.grid(row=13, column=2)
+status = Label(top, textvariable=sts,fg='#FF0008',bg='#333333',font=("courrier", 10))
+status.pack()
 
 e = StringVar()
-e1 = Entry(top, textvariable=e)
-e1.grid(row=4, column=2)
-e.set(" ")
+e1 = Entry(top, textvariable=e,bg='#99CCCC')
+e1.pack()
+e.set("")
 
-R1 = Radiobutton(top, text=Choix[0], variable=radio, value=1)
-R1.grid(row=6, column=2)
+R1 = Radiobutton(top, text=Choix[0], variable=radio, value=1,bg='#333333',font=("courrier", 10),fg='#3399FF')
+R1.pack()
 
-R2 = Radiobutton(top, text=Choix[1], variable=radio, value=2)
-R2.grid(row=7, column=2)
+R2 = Radiobutton(top, text=Choix[1], variable=radio, value=2,bg='#333333',selectcolor='#CCFFCC',font=("courrier", 10),fg='#3399FF')
+R2.pack()
 
-R3 = Radiobutton(top, text=Choix[2], variable=radio, value=3)
-R3.grid(row=8, column=2)
+R3 = Radiobutton(top, text=Choix[2], variable=radio, value=3,bg='#333333',selectcolor='#CCFFCC',font=("courrier", 10),fg='#3399FF')
+R3.pack()
 
-R4 = Radiobutton(top, text=Choix[3], variable=radio, value=4)
-R4.grid(row=9, column=2)
+R4 = Radiobutton(top, text=Choix[3], variable=radio, value=4,bg='#333333',selectcolor='#CCFFCC',font=("courrier", 10),fg='#3399FF')
+R4.pack()
 
-b = Button(top, text="Lancer", command=telecharger)
-c = Button(top, text="Resolution", command=Resolution)
-c.grid(row=7, column=3)
+b = Button(top, text="Lancer", command=telecharger,bd=4,bg='#FF6600',padx=100,font=("Courrier", 14))
+c = Button(top, text="Resolution", command=Resolution,font=("Courrier", 11))
+c.pack()
 
-liste = Listbox(top)
-liste.grid(row=9, column=3)
+liste = Listbox(top,bd=4,font=("courrier", 10),)
+liste.pack(expand=YES)
 
-vide1 = Label(top, text='')
-vide2 = Label(top, text='')
-vide3 = Label(top, text='')
-vide1.grid(row=10, column=2)
-vide2.grid(row=5, column=2)
-vide2.grid(row=12, column=2)
-b.grid(row=11, column=2)
+
+b.pack(side=BOTTOM ,expand=YES)
 
 
 top.mainloop()
