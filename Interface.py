@@ -2,25 +2,36 @@
 from tkinter import *
 import tkinter as tk
 import pafy
-
+import ttk
+import time
 # ----------------------------------déclaration des variables----------------------------------
 
-Resolution_video = []
+resolution = []
 Resolution_audio = []
 Choix = ['video', 'audio', 'playlist_video', 'playlist_audio']
 Playlist_videos = []
 Playlist_audios = []
+
+# -----------------------------------listeCursor()-------------------------------
+
+
+def listecursor():
+    t = liste.curselection()  # return tuple('Emplacement',)
+    x = []
+    x.append(t[0])
+    return int(x[0])
 # ----------------------------------Telechargement d'un vidéo-----------------------
 
 
 def video_download(y):
     t = liste.curselection()  # return tuple('Emplacement',)
+    print(t)
     x = []
     x.append(t[0])
     m = int(x[0])
-    videostreams = y.streams()
+    print(m)
     #print('la taille de la vidéo est : ', Resolution_video[y-1].get_filesize())
-    videostreams[m].download()
+    resolution[m-1].download(callback=mycb)
     sts.set('la vidéo est téléchargée')
     print('la vidéo est téléchargée')
 
@@ -29,12 +40,14 @@ def video_download(y):
 
 def audio_download(y):
     t = liste.curselection()  # return tuple('Emplacement',)
+    print(t)
     x = []
     x.append(t[0])
     m = int(x[0])
-    audiostreams = y.audiostreams()
+    print(m)
+    audiostreams = y.audiostreams(allback=mycb)
     #print('la taille du audio est : ', Resolution_audio[y-1].get_filesize())
-    audiostreams[m].download()
+    resolution[m-1].download()
     sts.set('le audio est téléchargé')
     print('le audio est téléchargé')
 
@@ -63,6 +76,7 @@ def download_playlist_audio(x):
         i.download()
     sts.set('la playlist audio est téléchargée')
     print('la playlist audio est téléchargée')
+
 # -----------------------------------------------------Resolution------------------------------
 
 
@@ -76,6 +90,7 @@ def Resolution():
     elif ch == 2:
         Str = video.audiostreams
     for i in Str:
+        resolution.append(i)
         liste.insert(END, i)
 
 # -----------------------------------------------Choix------------------------------------------------
@@ -95,6 +110,7 @@ def telecharger():
         print(lien)
         if Uchoix == 1:
             video = pafy.new(lien)
+            print(video.title)
             video_download(video)
         elif Uchoix == 2:
             video = pafy.new(lien)
@@ -115,49 +131,73 @@ def telecharger():
 
 top = Tk(className=' GUI YOUTUBE DOWNLOADER')
 # top['background'] = '#856ff8'
-top.geometry("650x450")
+top.geometry("770x550")
 top.config(background='#333333')
-top.iconbitmap(r'D:\Youtube_dw\youtube.ico')
+top.iconbitmap(r'C:\Users\PC\Desktop\Youtube_downloader\youtube.ico')
 
 radio = IntVar()
 
 title = Label(
-    top, text="Bienvenue, Ce petit programme vous permet de télécharger video, audio ou playlist",font=("Courrier", 13) , bg='#333333',fg='#FFFF66')
+    top, text="Bienvenue, Ce petit programme vous permet de télécharger video, audio ou playlist", font=("Courrier", 13), bg='#333333', fg='#FFFF66')
 title.pack()
 
-url = Label(top, text=" Enter le lien Youtube ",bg='#333333' ,font=("courrier", 11),fg='#99CCCC' )
+url = Label(top, text=" Enter le lien Youtube ",
+            bg='#333333', font=("courrier", 11), fg='#99CCCC')
 url.pack()
 
 sts = StringVar()
-status = Label(top, textvariable=sts,fg='#FF0008',bg='#333333',font=("courrier", 10))
+status = Label(top, textvariable=sts, fg='#FF0008',
+               bg='#333333', font=("courrier", 10))
 status.pack()
 
 e = StringVar()
-e1 = Entry(top, textvariable=e,bg='#99CCCC')
+e1 = Entry(top, textvariable=e, bg='#99CCCC')
 e1.pack()
 e.set("")
 
-R1 = Radiobutton(top, text=Choix[0], variable=radio, value=1,bg='#333333',font=("courrier", 10),fg='#3399FF')
+R1 = Radiobutton(top, text=Choix[0], variable=radio, value=1, bg='#333333', font=(
+    "courrier", 10), fg='#3399FF')
 R1.pack()
 
-R2 = Radiobutton(top, text=Choix[1], variable=radio, value=2,bg='#333333',selectcolor='#CCFFCC',font=("courrier", 10),fg='#3399FF')
+R2 = Radiobutton(top, text=Choix[1], variable=radio, value=2, bg='#333333',
+                 selectcolor='#CCFFCC', font=("courrier", 10), fg='#3399FF')
 R2.pack()
 
-R3 = Radiobutton(top, text=Choix[2], variable=radio, value=3,bg='#333333',selectcolor='#CCFFCC',font=("courrier", 10),fg='#3399FF')
+R3 = Radiobutton(top, text=Choix[2], variable=radio, value=3, bg='#333333',
+                 selectcolor='#CCFFCC', font=("courrier", 10), fg='#3399FF')
 R3.pack()
 
-R4 = Radiobutton(top, text=Choix[3], variable=radio, value=4,bg='#333333',selectcolor='#CCFFCC',font=("courrier", 10),fg='#3399FF')
+R4 = Radiobutton(top, text=Choix[3], variable=radio, value=4, bg='#333333',
+                 selectcolor='#CCFFCC', font=("courrier", 10), fg='#3399FF')
 R4.pack()
 
-b = Button(top, text="Lancer", command=telecharger,bd=4,bg='#FF6600',padx=100,font=("Courrier", 14))
-c = Button(top, text="Resolution", command=Resolution,font=("Courrier", 11))
+b = Button(top, text="Lancer", command=telecharger, bd=4,
+           bg='#FF6600', padx=100, font=("Courrier", 14))
+c = Button(top, text="Resolution", command=Resolution, font=("Courrier", 11))
 c.pack()
 
-liste = Listbox(top,bd=4,font=("courrier", 10),)
+liste = Listbox(top, bd=4, font=("courrier", 10),)
 liste.pack(expand=YES)
 
+k = ' '
 
-b.pack(side=BOTTOM ,expand=YES)
 
+def mycb(total, recvd, ratio, rate, eta):
+   # print(recvd, ratio, eta)
+    global k
+    k = ratio
+
+
+Etat = Label(top, textvariable=k)
+Etat.pack(side=BOTTOM, expand=YES)
+
+b.pack(side=BOTTOM, expand=YES)
+
+'''
+mpb = ttk.Progressbar(top, orient="horizontal",
+                      length=200, mode="determinate")
+mpb["maximum"] = 100
+mpb.pack()
+'''
 
 top.mainloop()
